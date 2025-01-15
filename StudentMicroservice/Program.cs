@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Polly;
+using Polly.Extensions.Http;
 using StudentMicroservice.Bank;
 using StudentMicroservice.Data;
-using StudentMicroservice.IReposirory;
+using StudentMicroservice.IRepository;
 using StudentMicroservice.Models;
 using StudentMicroservice.Repository;
 using StudentMicroservice.Services;
@@ -38,7 +40,11 @@ builder.Services.AddScoped<IMainRepository, MainRepository>();
 builder.Services.Configure<BankApiOptions>(builder.Configuration.GetSection("BankApi"));
 
 builder.Services.AddControllers();
-builder.Services.AddHttpClient();
+// Program.cs
+builder.Services.AddHttpClient<IBankService, BankService>()
+        .SetHandlerLifetime(TimeSpan.FromMinutes(5))  //Set lifetime to five minutes
+        .AddPolicyHandler(GetRetryPolicy())
+        .AddPolicyHandler(GetCircuitBreakerPolicy());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -59,3 +65,18 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
+{
+    return HttpPolicyExtensions
+        .HandleTransientHttpError()
+        .OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+        .WaitAndRetryAsync(6, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2,
+                                                                    retryAttempt)));
+}
+static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
+{
+    return HttpPolicyExtensions
+        .HandleTransientHttpError()
+        .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
+}
+

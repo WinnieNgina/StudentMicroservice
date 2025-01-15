@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 
-namespace StudentMicroservice.IReposirory;
+namespace StudentMicroservice.IRepository;
 
 public interface IMainRepository
 {

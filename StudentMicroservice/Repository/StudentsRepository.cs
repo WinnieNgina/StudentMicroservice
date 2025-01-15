@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentMicroservice.Data;
 using StudentMicroservice.Dtos;
-using StudentMicroservice.IReposirory;
+using StudentMicroservice.IRepository;
 
 namespace StudentMicroservice.Repository;
 

@@ -1,5 +1,5 @@
 ﻿using StudentMicroservice.Data;
-using StudentMicroservice.IReposirory;
+using StudentMicroservice.IRepository;
 using StudentMicroservice.Models;
 
 namespace StudentMicroservice.Repository;

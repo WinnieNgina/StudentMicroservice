@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using StudentMicroservice.Data;
 using StudentMicroservice.Dtos;
-using StudentMicroservice.IReposirory;
+using StudentMicroservice.IRepository;
 using StudentMicroservice.Models;
 
 namespace StudentMicroservice.Services;

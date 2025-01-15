@@ -1,6 +1,6 @@
 ﻿using StudentMicroservice.Models;
 
-namespace StudentMicroservice.IReposirory;
+namespace StudentMicroservice.IRepository;
 
 public interface IStatesRepository
 {

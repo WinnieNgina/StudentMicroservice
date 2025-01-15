@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using StudentMicroservice.Data;
-using StudentMicroservice.IReposirory;
+using StudentMicroservice.IRepository;
 
 namespace StudentMicroservice.Repository;
 

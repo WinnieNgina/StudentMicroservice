@@ -1,6 +1,6 @@
 ﻿using StudentMicroservice.Dtos;
 
-namespace StudentMicroservice.IReposirory;
+namespace StudentMicroservice.IRepository;
 
 public interface IStudentsRepository
 {
